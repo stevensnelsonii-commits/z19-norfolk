@@ -1,0 +1,273 @@
+🚀 GITHUB PAGES SETUP GUIDE
+TerraGrid Z19 Norfolk Satellite Viewer
+
+═══════════════════════════════════════════════════════════════════
+
+STEP-BY-STEP INSTRUCTIONS (5 minutes)
+
+═══════════════════════════════════════════════════════════════════
+
+STEP 1: Create GitHub Repository (2 minutes)
+───────────────────────────────────────────────
+
+1. Go to: https://github.com/new
+
+2. Sign in (create account if needed)
+   ✓ Use your personal GitHub account
+   ✓ Can be stevensnelsonii or another username
+
+3. Fill in repository details:
+   Repository name: z19-norfolk  (or any name you want)
+   Description: TerraGrid Z19 Norfolk Satellite Mosaic Viewer
+   Public: YES (must be public for free Pages)
+   Initialize with README: NO (we'll upload our own)
+
+4. Click: "Create repository"
+
+5. You'll see a blank repository with a URL like:
+   https://github.com/stevensnelsonii/z19-norfolk
+
+═══════════════════════════════════════════════════════════════════
+
+STEP 2: Upload Files (2 minutes)
+─────────────────────────────────
+
+Option A: Upload via GitHub Website (Easiest)
+──────────────────────────────────────────────
+
+1. Go to your new repository (GitHub shows it after creation)
+
+2. Click: "Add file" → "Upload files"
+
+3. In your file explorer:
+   Location: C:\Users\steve\DevTools\SwampShell\clients\emg\Tools\TerraGrid\output\GitHub-Pages-Ready\
+   
+   Select ALL files:
+   □ index.html          ← MAIN FILE
+   □ viewer.html
+   □ README.md           (or MEETING_SUMMARY.md renamed)
+   □ TECHNICAL_GUIDE.md
+   □ DEPLOY.txt
+   □ START_HERE.txt
+   □ PACKAGE_INFO.txt
+   □ UPLOAD_GUIDE.md
+
+4. Drag & drop them into the GitHub upload area
+   (or click "choose files")
+
+5. Scroll down and click: "Commit changes"
+   (Leave default message)
+
+6. Wait 30 seconds for upload to complete
+
+Option B: Upload via Git Command Line (For nerds)
+──────────────────────────────────────────────────
+
+If you know git:
+
+git clone https://github.com/YOUR-USERNAME/z19-norfolk.git
+cd z19-norfolk
+cp C:\Users\steve\DevTools\SwampShell\clients\emg\Tools\TerraGrid\output\GitHub-Pages-Ready\* .
+git add .
+git commit -m "Add TerraGrid Z19 viewer"
+git push origin main
+
+═══════════════════════════════════════════════════════════════════
+
+STEP 3: Enable GitHub Pages (1 minute)
+────────────────────────────────────────
+
+1. Go to your repository
+
+2. Click: Settings (top right) 
+   ├─ Should show a menu with options
+
+3. Left sidebar → Click: "Pages"
+   ├─ (Under "Code and automation" section)
+
+4. You should see:
+   "GitHub Pages
+    Source: Deploy from a branch"
+
+5. Select:
+   Branch: main (dropdown)
+   Folder: / (root)
+
+6. Click: "Save"
+
+7. GitHub will say:
+   "Your site is live at: https://username.github.io/z19-norfolk/"
+
+═══════════════════════════════════════════════════════════════════
+
+STEP 4: Verify It Works (30 seconds)
+──────────────────────────────────────
+
+1. Wait 1-2 minutes for deployment
+   (GitHub Pages takes a moment to build)
+
+2. Visit your new URL:
+   https://YOUR-USERNAME.github.io/z19-norfolk/
+
+   Example: https://stevensnelsonii.github.io/z19-norfolk/
+
+3. You should see:
+   ✓ TerraGrid Z19 viewer loads
+   ✓ Interactive map visible
+   ✓ Tabs work (Summary/Report)
+   ✓ Professional dark UI
+
+4. Done! Share the URL with EMG 🎉
+
+═══════════════════════════════════════════════════════════════════
+
+WHAT YOU NEED
+
+✓ GitHub account (free, takes 2 min to create)
+✓ Files from: GitHub-Pages-Ready folder
+✓ Browser (any modern browser works)
+✓ 5 minutes of time
+
+═══════════════════════════════════════════════════════════════════
+
+FILE DETAILS
+
+index.html              → MAIN FILE (opens when you visit URL)
+viewer.html            → Alternative viewer (backup)
+README.md              → Shows on GitHub repo (overview)
+TECHNICAL_GUIDE.md     → Full specifications
+MEETING_SUMMARY.md     → Executive brief for EMG
+DEPLOY.txt             → Quick reference
+START_HERE.txt         → Getting started
+PACKAGE_INFO.txt       → Package overview
+
+═══════════════════════════════════════════════════════════════════
+
+YOUR FINAL GITHUB PAGES URL
+
+Pattern: https://USERNAME.github.io/REPOSITORY/
+
+Example: https://stevensnelsonii.github.io/z19-norfolk/
+
+This URL:
+✓ Works on any device
+✓ Works offline (except map)
+✓ Shareable with clients
+✓ Professional appearance
+✓ Always available
+✓ Free hosting forever
+
+═══════════════════════════════════════════════════════════════════
+
+TROUBLESHOOTING
+
+❌ "404 Not Found" 
+   → Wait 2-3 minutes (GitHub Pages takes time)
+   → Hard refresh browser (Ctrl+Shift+R)
+   → Check URL is correct
+   → Verify "Pages" is enabled in Settings
+
+❌ Blank page
+   → Browser cached old version
+   → Hard refresh (Ctrl+Shift+R)
+   → Clear browser cache
+   → Try different browser
+
+❌ Map doesn't show
+   → Check internet connection
+   → Map loads from CDN
+   → Refresh page
+   → Check browser console (F12)
+
+❌ Can't find Settings → Pages
+   → Make sure you're logged in
+   → Go to repository page first
+   → Settings is top right
+   → Scroll down to "Pages" in sidebar
+
+═══════════════════════════════════════════════════════════════════
+
+SHARING THE VIEWER
+
+Once live, share this link with EMG:
+→ https://YOUR-USERNAME.github.io/z19-norfolk/
+
+They can:
+✓ View in any browser
+✓ On any device
+✓ No login needed
+✓ Works on phones
+✓ Professional appearance
+
+═══════════════════════════════════════════════════════════════════
+
+AFTER DEPLOYMENT
+
+If you need to make changes:
+
+1. Go to repository on GitHub
+
+2. Click on a file to edit
+   (e.g., click index.html)
+
+3. Click pencil icon (edit)
+
+4. Make changes
+
+5. Click "Commit changes"
+
+6. Wait 1 minute → Changes go live
+
+═══════════════════════════════════════════════════════════════════
+
+BACKUP & ARCHIVE
+
+Your GitHub repo is also a backup:
+✓ All files stored on GitHub servers
+✓ Version history (can revert changes)
+✓ Available forever
+✓ Professional archive
+
+═══════════════════════════════════════════════════════════════════
+
+CUSTOM DOMAIN (OPTIONAL)
+
+If you have a domain (example.com), you can:
+
+1. In Settings → Pages
+2. Under "Custom domain"
+3. Enter: example.com
+4. Follow DNS instructions
+5. Your viewer at: example.com
+
+═══════════════════════════════════════════════════════════════════
+
+SUMMARY
+
+✅ Create GitHub repo (https://github.com/new)
+✅ Upload files from GitHub-Pages-Ready folder
+✅ Enable GitHub Pages (Settings → Pages)
+✅ Wait 2 minutes
+✅ Visit: https://username.github.io/z19-norfolk/
+✅ Share URL with EMG
+✅ Done! 🎉
+
+═══════════════════════════════════════════════════════════════════
+
+Ready? Here's your checklist:
+
+□ Create GitHub account (if needed)
+□ Create new repository
+□ Upload files (GitHub-Pages-Ready folder)
+□ Enable GitHub Pages (Settings → Pages)
+□ Wait 2 minutes
+□ Test URL
+□ Share with EMG
+
+═══════════════════════════════════════════════════════════════════
+
+Questions?
+
+File location: C:\Users\steve\DevTools\SwampShell\clients\emg\Tools\TerraGrid\output\GitHub-Pages-Ready\
+
+All files ready to upload! 🚀

@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TerraGrid Z19 Norfolk - Proprietary Viewer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* PASSWORD SCREEN */
+        #passwordScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #passwordScreen.hidden {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .password-container {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 12px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .password-title {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .password-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .password-input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .password-input-group label {
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .password-input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .password-input-group input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .password-input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .password-btn {
+            width: 100%;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 10px;
+        }
+
+        .password-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .password-btn:active {
+            transform: translateY(0);
+        }
+
+        .password-error {
+            color: #ff6b6b;
+            font-size: 12px;
+            margin-top: 12px;
+            text-align: center;
+            display: none;
+            animation: shake 0.4s ease;
+        }
+
+        .password-error.show {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* MAIN CONTENT */
+        #appContainer {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 12px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: bold;
+            color: #667eea;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .project-info {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            padding-left: 15px;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .lock-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.4);
+            border-radius: 6px;
+            font-size: 11px;
+            color: #4caf50;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .logout-btn {
+            padding: 6px 12px;
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid rgba(244, 67, 54, 0.4);
+            border-radius: 6px;
+            color: #f44336;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover {
+            background: rgba(244, 67, 54, 0.3);
+            border-color: rgba(244, 67, 54, 0.6);
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .map-container {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .sidebar {
+            width: 320px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar-section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #667eea;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .metric-card {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 4px;
+        }
+
+        .metric-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-text {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-height: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-left,
+            .project-info {
+                display: none;
+            }
+
+            .password-container {
+                padding: 30px 20px;
+            }
+
+            .sidebar {
+                padding: 15px;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- PASSWORD SCREEN -->
+    <div id="passwordScreen">
+        <div class="password-container">
+            <div class="password-title">
+                <i class="fas fa-lock" style="margin-right: 8px;"></i>
+                Proprietary Access
+            </div>
+            <div class="password-subtitle">
+                This is proprietary technology owned by EMG. Please enter the access password to continue.
+            </div>
+            <div class="password-input-group">
+                <label for="passwordInput">Password</label>
+                <input 
+                    type="password" 
+                    id="passwordInput" 
+                    placeholder="Enter password" 
+                    autocomplete="off"
+                >
+            </div>
+            <button class="password-btn" onclick="checkPassword()">
+                <i class="fas fa-sign-in-alt" style="margin-right: 6px;"></i>
+                Access Viewer
+            </button>
+            <div id="passwordError" class="password-error">
+                Incorrect password. Please try again.
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="appContainer" style="display: none;">
+        <header>
+            <div class="header-left">
+                <div class="logo">
+                    <i class="fas fa-satellite"></i> TerraGrid Z19
+                </div>
+                <div class="project-info">
+                    Norfolk | Contract: PO-SSS-2025-EMG-01
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="lock-badge">
+                    <i class="fas fa-lock"></i> Protected
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <div class="section-title">Coverage Metrics</div>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value">7,632</div>
+                            <div class="metric-label">Coverage (km²)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">Z19</div>
+                            <div class="metric-label">Zoom Level</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">0.6m</div>
+                            <div class="metric-label">Resolution</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">235K+</div>
+                            <div class="metric-label">Tiles</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="section-title">Project Details</div>
+                    <div class="info-text">
+                        <strong>Location:</strong> Naval Station Norfolk, Virginia<br>
+                        <strong>Contract:</strong> PO-SSS-2025-EMG-01<br>
+                        <strong>Dataset:</strong> High-resolution satellite imagery at Z19 zoom level<br>
+                        <strong>Status:</strong> Complete
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="section-title">Instructions</div>
+                    <div class="info-text">
+                        <strong>Zoom:</strong> Scroll or pinch<br>
+                        <strong>Pan:</strong> Click and drag<br>
+                        <strong>Layers:</strong> Use map controls (top-left)<br>
+                        <br>
+                        This viewer displays ultra-high-resolution satellite imagery. Zoom in for detailed terrain analysis.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.0/crypto-js.min.js"></script>
+
+    <script>
+        // SECURITY CONFIGURATION
+        // Password is hashed with SHA-256 for basic obfuscation
+        // Default password: "swampshell" (you MUST change this!)
+        const PASSWORD_HASH = "60303ae22b998861bce3b28f33eec1be758a213c86c93c076dbe9f558c11c752";
+        
+        function hashPassword(pwd) {
+            return CryptoJS.SHA256(pwd).toString();
+        }
+
+        function checkPassword() {
+            const inputField = document.getElementById('passwordInput');
+            const password = inputField.value;
+            const errorMsg = document.getElementById('passwordError');
+            
+            if (hashPassword(password) === PASSWORD_HASH) {
+                // Correct password
+                errorMsg.classList.remove('show');
+                document.getElementById('passwordScreen').classList.add('hidden');
+                document.getElementById('appContainer').style.display = 'flex';
+                sessionStorage.setItem('authenticated', 'true');
+                initializeMap();
+            } else {
+                // Wrong password
+                errorMsg.classList.add('show');
+                inputField.value = '';
+                inputField.focus();
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('authenticated');
+            document.getElementById('appContainer').style.display = 'none';
+            document.getElementById('passwordScreen').classList.remove('hidden');
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordInput').focus();
+            document.getElementById('passwordError').classList.remove('show');
+        }
+
+        // Allow Enter key to submit password
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('passwordInput');
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+            passwordInput.focus();
+
+            // Check if already authenticated in this session
+            if (sessionStorage.getItem('authenticated') === 'true') {
+                document.getElementById('passwordScreen').classList.add('hidden');
+                document.getElementById('appContainer').style.display = 'flex';
+                initializeMap();
+            }
+        });
+
+        // MAP INITIALIZATION
+        let map;
+
+        function initializeMap() {
+            if (map) return; // Already initialized
+
+            map = L.map('map').setView([36.9466, -76.3050], 13);
+
+            // Add satellite layer
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri',
+                maxZoom: 19,
+                minZoom: 10
+            }).addTo(map);
+
+            // Add custom controls
+            map.attributionControl.setPrefix('');
+
+            // Navy Base Marker
+            const baseMarker = L.circleMarker([36.9466, -76.3050], {
+                radius: 8,
+                fillColor: '#667eea',
+                color: '#ffffff',
+                weight: 2,
+                opacity: 0.8,
+                fillOpacity: 0.6
+            }).bindPopup('<strong>Naval Station Norfolk</strong><br>Primary Analysis Area', {
+                className: 'custom-popup'
+            }).addTo(map);
+        }
+    </script>
+</body>
+</html>

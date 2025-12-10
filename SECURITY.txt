@@ -1,0 +1,133 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    🔒 PASSWORD PROTECTED - QUICK START                      ║
+║                   TerraGrid Z19 Norfolk - EMG Delivery                       ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+📌 IMMEDIATE ACTIONS:
+────────────────────────────────────────────────────────────────────────────
+
+1️⃣  CHANGE DEFAULT PASSWORD (CRITICAL!)
+    • Default password: "swampshell" (obviously insecure!)
+    • See PASSWORD_CONFIG.txt for complete instructions
+    • Take 5 minutes to set a strong password now
+    • Generate new password: https://www.freeformatter.com/sha256-hash-generator.html
+
+2️⃣  DEPLOY TO GITHUB PAGES
+    • Create repo: https://github.com/new
+    • Upload all files from this folder
+    • Enable Pages in Settings (2 minutes)
+    • Share URL + password with EMG separately
+
+────────────────────────────────────────────────────────────────────────────
+HOW IT WORKS:
+────────────────────────────────────────────────────────────────────────────
+
+When someone visits your GitHub Pages URL:
+1. Password screen appears ← (Proprietary gatekeeper)
+2. They enter password
+3. Access is verified (SHA-256 hash comparison)
+4. Viewer unlocks for their browser session
+5. Map loads with satellite imagery
+6. They can zoom/pan/explore
+7. Logout button available in header
+
+No backend server needed. Works 100% offline.
+
+────────────────────────────────────────────────────────────────────────────
+FILES IN THIS PACKAGE:
+────────────────────────────────────────────────────────────────────────────
+
+✅ index.html                    ← MAIN VIEWER (password-protected)
+✅ viewer.html                   ← Alternative viewer (also protected)
+✅ PASSWORD_CONFIG.txt           ← Instructions for changing password
+✅ GITHUB_SETUP.txt              ← How to deploy to GitHub Pages
+✅ MEETING_SUMMARY.md            ← Executive brief for EMG
+✅ TECHNICAL_GUIDE.md            ← Full technical documentation
+✅ DEPLOY.txt                    ← Quick deployment reference
+✅ START_HERE.txt                ← Project overview
+✅ UPLOAD_GUIDE.md               ← File upload instructions
+✅ PACKAGE_INFO.txt              ← Package specifications
+
+────────────────────────────────────────────────────────────────────────────
+SECURITY NOTES:
+────────────────────────────────────────────────────────────────────────────
+
+• Client-side password protection (user can view HTML source)
+• Suitable for: Internal tools, contractor portals, basic IP protection
+• NOT for: Classified data, financial records, military secrets
+• Password appears as SHA-256 hash in code (not plaintext)
+• Session-based (password required per tab)
+• Works across all modern browsers (Chrome, Safari, Firefox, Edge)
+
+For highly sensitive data:
+→ Add server-side authentication (OAuth2, SAML, etc.)
+→ Use HTTPS only (GitHub Pages provides this by default)
+→ Limit distribution of password to cleared personnel
+
+────────────────────────────────────────────────────────────────────────────
+NEXT STEPS - 5 MINUTE SETUP:
+────────────────────────────────────────────────────────────────────────────
+
+STEP 1: Change Password (3 minutes)
+  Open: PASSWORD_CONFIG.txt
+  Follow: "HOW TO CHANGE THE PASSWORD" section
+  You'll need:
+    • A strong password (recommend: ProjectCode+Date format)
+    • SHA256 hash generator: https://www.freeformatter.com/sha256-hash-generator.html
+    • Text editor to edit index.html
+
+STEP 2: Deploy to GitHub (2 minutes)
+  1. Go to: https://github.com/new
+  2. Create repo: "z19-norfolk"
+  3. Upload all 10 files from this folder
+  4. Settings → Pages → Enable
+  5. Wait 2 minutes for deployment
+
+STEP 3: Share with EMG
+  Send SEPARATELY:
+  • Viewer URL: https://stevensnelsonii.github.io/z19-norfolk/
+  • Password: [your chosen password]
+  • Instructions: See MEETING_SUMMARY.md
+
+────────────────────────────────────────────────────────────────────────────
+DEFAULT CREDENTIALS (CHANGE IMMEDIATELY):
+────────────────────────────────────────────────────────────────────────────
+
+Username:     [None - password only]
+Password:     swampshell
+Status:       🔴 INSECURE - Must be changed before sharing with EMG
+Hash (SHA256): 60303ae22b998861bce3b28f33eec1be758a213c86c93c076dbe9f558c11c752
+
+⚠️  If you share this with EMG without changing the password,
+    they can easily guess it. Please change it first!
+
+────────────────────────────────────────────────────────────────────────────
+SUPPORT & TROUBLESHOOTING:
+────────────────────────────────────────────────────────────────────────────
+
+Q: Where do I change the password?
+A: See PASSWORD_CONFIG.txt (complete guide with examples)
+
+Q: How do I deploy to GitHub Pages?
+A: See GITHUB_SETUP.txt (step-by-step instructions)
+
+Q: What password should I use?
+A: Something strong and unique. Example formats:
+   • EMG-Dec2025-NavalOps!
+   • TerraGrid2025Norfolk#Classified
+   • NorfolkZ19-AccessOnly2025
+
+Q: Can EMG change the password themselves?
+A: No - password is baked into index.html. You control it.
+   If they want to change it, they request you to do it and deploy again.
+
+Q: Is this encryption secure?
+A: It's basic obfuscation (SHA-256 hash). Browser can be inspected to see the hash.
+   This is suitable for IP protection and basic access control.
+   NOT suitable for financial/classified data (use server-side auth for that).
+
+────────────────────────────────────────────────────────────────────────────
+Contract: PO-SSS-2025-EMG-01 | Proprietary Technology
+Generated: December 10, 2025
+
+Ready? Start with PASSWORD_CONFIG.txt 📄
